@@ -13,6 +13,7 @@ import jakarta.enterprise.event.Observes;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Objects;
 
 @ApplicationScoped
 public class Registration {
@@ -39,9 +40,24 @@ public class Registration {
         // Get the local IP address dynamically
         String address = containerId;
 
+//        // Get the local IP address dynamically
+//        String address;
+//        try {
+//            address = InetAddress.getLocalHost().getHostAddress();
+//        } catch (UnknownHostException e) {
+//            throw new RuntimeException("Failed to get the local IP address", e);
+//        }
+
+//        if(Objects.equals(address, "fedora")){
+//            address="localhost";
+//        }
+
 
         client = ConsulClient.create(vertx, new ConsulClientOptions().setHost(host).setPort(port));
+
         serviceId = "reservation-service-" + containerId + "-" + service_port;
+
+        System.out.println("registreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed: "+serviceId);
 
         client.registerServiceAndAwait(
                 new ServiceOptions().setPort(service_port).setAddress(address).setName(service_name).setId(serviceId));
