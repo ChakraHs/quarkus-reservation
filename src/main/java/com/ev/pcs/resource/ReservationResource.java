@@ -20,6 +20,11 @@ public class ReservationResource {
     @Inject
     ReservationService reservationService;
 
+    @GET
+    public Uni<Response> test() {
+        return Uni.createFrom().item(Response.ok("test success").build());
+    }
+
     @POST
     public Uni<Response> create(Reservation reservation) {
         return reservationService.createReservation(reservation)
